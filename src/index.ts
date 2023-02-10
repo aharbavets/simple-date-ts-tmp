@@ -146,7 +146,7 @@ export class SimpleDate {
         return ''
     }
 
-    addDays(count: number) {
+    addDays = (count: number) => {
         count = Math.round(count)
 
         if (count > 0) {
@@ -179,7 +179,7 @@ export class SimpleDate {
         return SimpleDate.create(year, month, day)
     }
 
-    protected _subtractDays(count: number) {
+    protected _subtractDays = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
         let day = this.getDay()
@@ -202,7 +202,7 @@ export class SimpleDate {
         return SimpleDate.create(year, month, day)
     }
 
-    protected static daysInMonth(month: number, year: number) {
+    protected static daysInMonth = (month: number, year: number) => {
         switch (month) {
             case 1: return 31
             case 2: return year % 4 === 0 ? 29 : 28
@@ -220,7 +220,7 @@ export class SimpleDate {
         }
     }
 
-    addMonths(count: number) {
+    addMonths = (count: number) => {
         count = Math.round(count)
 
         if (count > 0) {
@@ -249,7 +249,7 @@ export class SimpleDate {
         return SimpleDate.create(year, month, day)
     }
 
-    protected _subtractMonths(count: number) {
+    protected _subtractMonths = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
         const day = this.getDay()
@@ -266,7 +266,7 @@ export class SimpleDate {
         return SimpleDate.create(year, month, day)
     }
 
-    addYears(count: number) {
+    addYears = (count: number) => {
         const year = this.getYear()
         const month = this.getMonth()
         const day = this.getDay()
