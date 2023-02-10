@@ -274,4 +274,6 @@ export class SimpleDate {
         return SimpleDate.create(year + count, month, day)
     }
 
+    isToday = (): boolean => this.equals(new SimpleDate(new Date()))
+
 }
