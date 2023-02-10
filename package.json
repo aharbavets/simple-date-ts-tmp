@@ -5,5 +5,24 @@
   "main": "index.ts",
   "repository": "https://github.com/gorsash/simple-date-ts",
   "author": "Alexander Gorbovets <alexander.gorbovets@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.36.2",
+    "@typescript-eslint/parser": "5.36.2",
+    "eslint": "8.23.0",
+    "typescript": "4.8.3"
+  },
+  "scripts": {
+    "build": "tsc -d -p ./src --outDir .",
+    "compile": "tsc -p ./src --noEmit",
+    "lint": "eslint 'src/**/*.{js,ts}' --quiet",
+    "postinstall": "npm run build",
+    "release": "standard-version -m'%s'"
+  },
+  "peerDependencies": {
+    "typescript": ">= 3.0.0"
+  },
+  "dependencies": {
+    "standard-version": "^9.5.0"
+  }
 }
