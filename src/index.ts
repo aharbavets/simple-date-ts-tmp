@@ -85,8 +85,7 @@ export class SimpleDate {
         const hourOffset = padStart(Math.round(abs / 60), 2, '0')
         const minuteOffset = padStart(abs % 60, 2, '0')
         const timeZoneOffset = hourOffset + ':' + minuteOffset
-        let isoDate = this.raw + 'T00:00:00.000' + sign + timeZoneOffset
-        return isoDate
+        return this.raw + 'T00:00:00.000' + sign + timeZoneOffset
     }
 
     toJsDate = () => {
