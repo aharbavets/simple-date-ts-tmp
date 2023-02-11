@@ -120,8 +120,6 @@ export class SimpleDate {
         }
     }
 
-    getDayOfWeekLetter = (): number => this.toJsDate().getDay() // in the Date object getDay() returns the day of the week
-
     getFullMonth = () => {
         const [year, month] = this.raw.split('-')
         return `${year}-${month}`
