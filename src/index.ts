@@ -58,14 +58,6 @@ export class SimpleDate {
             day = countOfDaysInMonth
         }
 
-        const padStart = (value: number, count: number, padCharacter: string = '0') => {
-            let result = String(value)
-            while (result.length < count) {
-                result = padCharacter + result
-            }
-            return result
-        }
-
         const y = padStart(year, 4, '0')
         const m = padStart(month, 2, '0')
         const d = padStart(day, 2, '0')
@@ -87,10 +79,18 @@ export class SimpleDate {
 
     toString = () => this.raw
 
-    toJsDate = () => {
+    getIsoDate = () => {
         const sign = this.timezoneOffset > 0 ? '+' : '-'
-        const timeZoneOffset = this.timezoneOffset / 60 + ':' + this.timezoneOffset % 60
-        return new Date(this.raw + 'T00:00:00.000' + sign + timeZoneOffset)
+        const abs = Math.abs(this.timezoneOffset)
+        const hourOffset = padStart(Math.round(abs / 60), 2, '0')
+        const minuteOffset = padStart(abs % 60, 2, '0')
+        const timeZoneOffset = hourOffset + ':' + minuteOffset
+        let isoDate = this.raw + 'T00:00:00.000' + sign + timeZoneOffset
+        return isoDate
+    }
+
+    toJsDate = () => {
+        return new Date(this.getIsoDate())
     }
 
     toJsDateInUTC = () => new Date(this.raw + 'T00:00:00.000' + 'Z');
@@ -294,4 +294,13 @@ export class SimpleDate {
 
     isToday = (): boolean => this.equals(new SimpleDate(new Date()))
 
+}
+
+
+const padStart = (value: number, count: number, padCharacter: string = '0') => {
+    let result = String(value)
+    while (result.length < count) {
+        result = padCharacter + result
+    }
+    return result
 }
