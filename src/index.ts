@@ -103,7 +103,25 @@ export class SimpleDate {
 
     getMonth = (): number => Number(this.raw.split('-')[1])
 
-    getDay = (): number => Number(this.raw.split('-')[2])
+    getDayOfMonth = (): number => Number(this.raw.split('-')[2])
+
+    getDayOfWeek = (): number => this.toJsDate().getDay() // in the Date object getDay() returns the day of the week
+
+    getDayNameInEnglish = (): string => {
+        const day = this.getDayOfWeek()
+        switch (day) {
+            case 0: return 'Sunday'
+            case 1: return 'Monday'
+            case 2: return 'Tuesday'
+            case 3: return 'Wednesday'
+            case 4: return 'Thursday'
+            case 5: return 'Friday'
+            case 6: return 'Saturday'
+            default: return '[Error]'
+        }
+    }
+
+    getDayOfWeekLetter = (): number => this.toJsDate().getDay() // in the Date object getDay() returns the day of the week
 
     getFullMonth = () => {
         const [year, month] = this.raw.split('-')
@@ -161,7 +179,7 @@ export class SimpleDate {
     protected _addDays = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
-        let day = this.getDay()
+        let day = this.getDayOfMonth()
 
         while (count-- > 0) {
             day++
@@ -182,7 +200,7 @@ export class SimpleDate {
     protected _subtractDays = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
-        let day = this.getDay()
+        let day = this.getDayOfMonth()
 
         while (count-- > 0) {
             day--
@@ -235,7 +253,7 @@ export class SimpleDate {
     protected _addMonths = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
-        const day = this.getDay()
+        const day = this.getDayOfMonth()
 
         while (count-- > 0) {
             month++
@@ -252,7 +270,7 @@ export class SimpleDate {
     protected _subtractMonths = (count: number) => {
         let year = this.getYear()
         let month = this.getMonth()
-        const day = this.getDay()
+        const day = this.getDayOfMonth()
 
         while (count-- > 0) {
             month--
@@ -269,7 +287,7 @@ export class SimpleDate {
     addYears = (count: number) => {
         const year = this.getYear()
         const month = this.getMonth()
-        const day = this.getDay()
+        const day = this.getDayOfMonth()
 
         return SimpleDate.create(year + count, month, day)
     }
