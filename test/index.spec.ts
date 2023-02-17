@@ -216,4 +216,10 @@ describe('index', () => {
         })
     })
 
+    describe('#getComponents', () => {
+        it("SimpleDate('2023-02-01').getComponents() should return {year: 2023, month: 2, day: 1}", () => {
+            assert.deepEqual(new SimpleDate('2023-02-01').getComponents(), {year: 2023, month: 2, day: 1})
+        })
+    })
+
 })

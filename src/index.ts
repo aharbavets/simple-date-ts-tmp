@@ -181,6 +181,14 @@ export class SimpleDate {
         return ''
     }
 
+    getComponents(): {year: number, month: number, day: number} {
+        return {
+            year: this.getYear(),
+            month: this.getMonth(),
+            day: this.getDayOfMonth()
+        }
+    }
+
     addDays = (count: number) => {
         count = Math.round(count)
 
