@@ -5,7 +5,13 @@ import {deepStrictEqual} from "assert"
 
 describe('index', () => {
 
-    describe('addDays', () => {
+    describe('new SimpleDate() without parameters', () => {
+        it('new SimpleDate() without parameters should be today (except super rare cases when the test is running at the time 23:59:59.999)', () => {
+            assert.equal(SimpleDate.today().isToday(), true)
+        })
+    })
+
+    describe('#addDays', () => {
 
         it('Add 1 day', () => {
             deepStrictEqual(new SimpleDate('2020-01-10').addDays(1).getRaw(), '2020-01-11')
@@ -117,6 +123,96 @@ describe('index', () => {
 
         it('getDayNameInEnglish should return Saturday for new SimpleDate("2023-02-11")', () => {
             assert.equal(new SimpleDate("2023-02-11").getDayNameInEnglish(), 'Saturday')
+        })
+    })
+
+    describe('#today()', () => {
+        it('today().isToday() should always be true (except super rare cases when the test is running at the time 23:59:59.999)', () => {
+            assert.equal(SimpleDate.today().isToday(), true)
+        })
+    })
+
+    describe('#isBetweenInclusive', () => {
+        it('isBetweenInclusive() returns true', () => {
+            assert.equal(new SimpleDate('2023-02-01').isBetweenInclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-03-01')
+            ), true)
+        })
+        it('isBetweenInclusive() returns false because this is before the interval', () => {
+            assert.equal(new SimpleDate('2023-01-01').isBetweenInclusive(
+                new SimpleDate('2023-02-01'),
+                new SimpleDate('2023-03-01')
+            ), false)
+        })
+        it('isBetweenInclusive() returns true because this is on the left edge of the interval', () => {
+            assert.equal(new SimpleDate('2023-01-01').isBetweenInclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), true)
+        })
+        it('isBetweenInclusive() returns false because this is after the interval', () => {
+            assert.equal(new SimpleDate('2023-03-01').isBetweenInclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), false)
+        })
+        it('isBetweenInclusive() returns true because this is on the right edge of the interval', () => {
+            assert.equal(new SimpleDate('2023-02-01').isBetweenInclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), true)
+        })
+    })
+
+    describe('#isBetweenExclusive', () => {
+        it('isBetweenExclusive() returns true', () => {
+            assert.equal(new SimpleDate('2023-02-01').isBetweenExclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-03-01')
+            ), true)
+        })
+        it('isBetweenExclusive() returns false because this is before the interval', () => {
+            assert.equal(new SimpleDate('2023-01-01').isBetweenExclusive(
+                new SimpleDate('2023-02-01'),
+                new SimpleDate('2023-03-01')
+            ), false)
+        })
+        it('isBetweenExclusive() returns false because this is on the left edge of the interval', () => {
+            assert.equal(new SimpleDate('2023-01-01').isBetweenExclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), false)
+        })
+        it('isBetweenExclusive() returns false because this is after the interval', () => {
+            assert.equal(new SimpleDate('2023-03-01').isBetweenExclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), false)
+        })
+        it('isBetweenExclusive() returns true because this is on the right edge of the interval', () => {
+            assert.equal(new SimpleDate('2023-02-01').isBetweenExclusive(
+                new SimpleDate('2023-01-01'),
+                new SimpleDate('2023-02-01')
+            ), false)
+        })
+    })
+
+    describe('#daysBetween', () => {
+        it("new SimpleDate('2023-01-01').daysBetween(new SimpleDate('2023-01-02')) should return 1", () => {
+            assert.equal(new SimpleDate('2023-01-01').daysBetween(new SimpleDate('2023-01-02')), 1)
+        })
+        it("new SimpleDate('2023-01-02').daysBetween(new SimpleDate('2023-01-01')) should return -1", () => {
+            assert.equal(new SimpleDate('2023-01-02').daysBetween(new SimpleDate('2023-01-01')), -1)
+        })
+        it("new SimpleDate('2023-01-01').daysBetween(new SimpleDate('2023-01-11')) should return 10", () => {
+            assert.equal(new SimpleDate('2023-01-01').daysBetween(new SimpleDate('2023-01-11')), 10)
+        })
+        it("new SimpleDate('2023-02-28').daysBetween(new SimpleDate('2023-02-01')) should return 1", () => {
+            assert.equal(new SimpleDate('2023-02-28').daysBetween(new SimpleDate('2023-03-01')), 1)
+        })
+        it("new SimpleDate('2024-02-28').daysBetween(new SimpleDate('2024-02-01')) should return 2", () => {
+            assert.equal(new SimpleDate('2024-02-28').daysBetween(new SimpleDate('2024-03-01')), 2)
         })
     })
 

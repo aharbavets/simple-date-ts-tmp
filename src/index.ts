@@ -4,12 +4,17 @@ export class SimpleDate {
 
     private readonly timezoneOffset: number
 
-    constructor(value: string|SimpleDate|Date, timezoneOffset?: number) {
+    constructor(value: string|SimpleDate|Date|undefined, timezoneOffset?: number) {
         this.timezoneOffset = timezoneOffset || (new Date().getTimezoneOffset())
 
         this.raw = '0000-01-01'
 
         switch (typeof value) {
+            case 'undefined': {
+                this.raw = SimpleDate.today().getRaw()
+                break
+            }
+
             case 'string': {
                 const matches = /^(\d+)-(\d+)-(\d+)/.exec(value)
 
@@ -65,6 +70,11 @@ export class SimpleDate {
         return new SimpleDate(`${y}-${m}-${d}`)
     }
 
+    static today = () => new SimpleDate(new Date())
+
+    /** @deprecated */
+    static now = SimpleDate.today
+
     static zero = () => new SimpleDate('0000-01-01')
 
     equals = (other: SimpleDate) => this.raw === other.getRaw()
@@ -76,6 +86,16 @@ export class SimpleDate {
     greaterThan = (other: SimpleDate) => this.raw > other.getRaw()
 
     greaterThanOrEqual = (other: SimpleDate) => this.raw >= other.getRaw()
+
+    isBetweenExclusive = (first: SimpleDate, second: SimpleDate) => this.greaterThan(first) && this.lessThan(second)
+
+    isBetweenInclusive = (first: SimpleDate, second: SimpleDate) => this.greaterThanOrEqual(first) && this.lessThanOrEqual(second)
+
+    daysBetween = (other: SimpleDate) => {
+        const diffTime = other.toJsDate().getTime() - this.toJsDate().getTime()
+        const msInDay = 24 * 60 * 60 * 1000
+        return Math.round(diffTime / msInDay)
+    }
 
     toString = () => this.raw
 
