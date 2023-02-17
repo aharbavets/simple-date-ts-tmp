@@ -28,7 +28,8 @@
     "compile": "tsc -p ./src --noEmit",
     "lint": "eslint 'src/**/*.{js,ts}' --quiet",
     "postinstall": "npm run build",
-    "release": "standard-version -m'%s'"
+    "release": "standard-version -m'%s'",
+    "publish": "npm publish"
   },
   "peerDependencies": {
     "typescript": ">= 3.0.0"
