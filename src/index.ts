@@ -93,7 +93,7 @@ export class SimpleDate {
 
     firstDayOfWeekInEurope = () => this.firstDayOfWeek(WeekStartDay.MONDAY)
 
-    firstDayOfCurrentWeekInAmerica = () => this.firstDayOfWeek(WeekStartDay.SUNDAY)
+    firstDayOfWeekInAmerica = () => this.firstDayOfWeek(WeekStartDay.SUNDAY)
 
     /** @deprecated */
     static now = SimpleDate.today
