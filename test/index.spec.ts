@@ -1,6 +1,6 @@
 import {describe, it} from 'mocha'
 import {assert} from 'chai'
-import {SimpleDate} from "../index"
+import {SimpleDate, WeekStartDay} from "../index"
 import {deepStrictEqual} from "assert"
 
 describe('index', () => {
@@ -219,6 +219,27 @@ describe('index', () => {
     describe('#getComponents', () => {
         it("SimpleDate('2023-02-01').getComponents() should return {year: 2023, month: 2, day: 1}", () => {
             assert.deepEqual(new SimpleDate('2023-02-01').getComponents(), {year: 2023, month: 2, day: 1})
+        })
+    })
+
+    describe('#firstDayOfWeek', () => {
+        it("SimpleDate('2023-02-20').firstDayOfWeek(WeekStartDay.MONDAY).getRaw() should return '2023-02-20'", () => {
+            assert.equal(new SimpleDate('2023-02-20').firstDayOfWeek(WeekStartDay.MONDAY).getRaw(), '2023-02-20')
+        })
+        it("SimpleDate('2023-02-20').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw() should return '2023-02-19'", () => {
+            assert.equal(new SimpleDate('2023-02-20').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw(), '2023-02-19')
+        })
+        it("SimpleDate('2023-02-23').firstDayOfWeek(WeekStartDay.MONDAY).getRaw() should return '2023-02-20'", () => {
+            assert.equal(new SimpleDate('2023-02-23').firstDayOfWeek(WeekStartDay.MONDAY).getRaw(), '2023-02-20')
+        })
+        it("SimpleDate('2023-02-23').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw() should return '2023-02-19'", () => {
+            assert.equal(new SimpleDate('2023-02-23').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw(), '2023-02-19')
+        })
+        it("SimpleDate('2023-02-26').firstDayOfWeek(WeekStartDay.MONDAY).getRaw() should return '2023-02-20'", () => {
+            assert.equal(new SimpleDate('2023-02-26').firstDayOfWeek(WeekStartDay.MONDAY).getRaw(), '2023-02-20')
+        })
+        it("SimpleDate('2023-02-26').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw() should return '2023-02-26'", () => {
+            assert.equal(new SimpleDate('2023-02-26').firstDayOfWeek(WeekStartDay.SUNDAY).getRaw(), '2023-02-26')
         })
     })
 

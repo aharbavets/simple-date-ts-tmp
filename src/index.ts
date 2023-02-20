@@ -1,3 +1,8 @@
+export enum WeekStartDay {
+    SUNDAY = 'SUNDAY',
+    MONDAY = 'MONDAY',
+}
+
 export class SimpleDate {
 
     private readonly raw: string
@@ -71,6 +76,24 @@ export class SimpleDate {
     }
 
     static today = () => new SimpleDate(new Date())
+
+    firstDayOfWeek = (weekStartDay: WeekStartDay) => {
+        switch (weekStartDay) {
+            case WeekStartDay.SUNDAY: {
+                let dayOfWeek = this.getDayOfWeek()
+                return this.addDays(-dayOfWeek)
+            }
+            case WeekStartDay.MONDAY: {
+                // processing case of sunday specifically (in the USA it's a beginning of the next week, but in Europe it's the end of week)
+                let dayOfWeek = this.getDayOfWeek()
+                return this.addDays(dayOfWeek == 0 ? -6 : 1 - dayOfWeek)
+            }
+        }
+    }
+
+    firstDayOfWeekInEurope = (weekStartDay: WeekStartDay) => this.firstDayOfWeek(WeekStartDay.MONDAY)
+
+    firstDayOfCurrentWeekInAmerica = (weekStartDay: WeekStartDay) => this.firstDayOfWeek(WeekStartDay.SUNDAY)
 
     /** @deprecated */
     static now = SimpleDate.today
