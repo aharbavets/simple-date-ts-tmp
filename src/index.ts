@@ -77,6 +77,8 @@ export class SimpleDate {
 
     static today = () => new SimpleDate(new Date())
 
+    static todayInTimeZoneWithOffset = (offset: number) => new SimpleDate(new Date(), offset)
+
     firstDayOfWeek = (weekStartDay: WeekStartDay) => {
         switch (weekStartDay) {
             case WeekStartDay.SUNDAY: {
