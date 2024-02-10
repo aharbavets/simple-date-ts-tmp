@@ -77,6 +77,10 @@ export class SimpleDate {
 
     static today = () => new SimpleDate(new Date())
 
+    static tomorrow = () => new SimpleDate(new Date()).nextDay()
+
+    static yesterday = () => new SimpleDate(new Date()).previousDay()
+
     static todayInTimeZoneWithOffset = (offset: number) => new SimpleDate(new Date(), offset)
 
     firstDayOfWeek = (weekStartDay: WeekStartDay) => {
@@ -225,6 +229,10 @@ export class SimpleDate {
             return new SimpleDate(this.raw)
         }
     }
+
+    previousDay = () => this.addDays(-1)
+
+    nextDay = () => this.addDays(1)
 
     protected _addDays = (count: number) => {
         let year = this.getYear()
